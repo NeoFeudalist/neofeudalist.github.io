@@ -93,14 +93,14 @@ We want to find a function `distribute_aces` that:
 - **given** the total value of all the non-Ace cards, `nonAceValue`, and the number of Aces, `numAces`,
 - **returns** a pair `(aces1, aces11)` that tells us how many of the Aces should be worth 1 or worth 11.
 
-The answer returned by `distribute_aces` must satisfy a property:distr
+The answer returned by `distribute_aces` must satisfy a property:
 
-**Property:** If `distribute_aces(nonAceValue, numAces) == (aces1, aces11)`, then `sum_hand_value(nonAceValue, aces1, aces11)` must be as close to 21 as possible without going over. 
+**Property:** If `distribute_aces(nonAceValue, numAces) == (aces1, aces11)`, then `sum_hand_value(nonAceValue, aces1, aces11)` must be as close to 21 as possible without going over.
 
 That is, for a pair `(aces1, aces11)` returned by `distribute_aces`, there must not be another pair `(other_aces1, other_aces11)` that may be returned by `distribute_aces` such that:
 
 - `sum_hand_value(nonAceValue, other_aces1, other_aces11)` is greater than `sum_hand_value(nonAceValue, aces1, aces11)` and
-- `sum_hand_value(nonAceValue, aces1, aces11)` is less than or equal to 21.
+- `sum_hand_value(nonAceValue, other_aces1, other_aces11)` is less than or equal to 21.
 
 Properties are important because they give us a goal to achieve, and it is our job to write a function and *prove* that it meets the property. This is in contrast to the usual method of unit testing where we just write a bunch of input-output pairs and hope we didn't miss an edge or corner case. 
 
@@ -136,9 +136,56 @@ $$ \begin{aligned} \mathrm{sumHandValue}(\mathrm{nonAceValue}, \mathrm{aces1}, \
 11 * \mathrm{aces11} < 22 - (\mathrm{nonAceValue} + \mathrm{aces1}) < 22 \\
 \text{[as card values are positive]} \\
 11 * \mathrm{aces11} < 22 \\
-\mathrm{aces11} < 2
+\Rightarrow \mathrm{aces11} < 2
 \end{aligned} $$
 
-It follows that there are only two possibilities for `aces11`: 0 and 1, as it must be less than 2. All that is left is to determine whether `aces11` should be 0 or 1.
+It follows that there are only two possibilities for `aces11`: 0 and 1, as it must be less than 2. All that is left is to determine whether `aces11` should be 0 or 1. Another way to prove this is by assuming `aces11 >= 2`,
 
+$$ \begin{aligned}
+\mathrm{aces11} \geq 2 \\
+11 * \mathrm{aces11} \geq 22 \\
+\mathrm{nonAceValue} + \mathrm{aces1} + 11 * \mathrm{aces11} \geq 22 \\
+\quad \text{[as card values are positive]} \\
+\Rightarrow \mathrm{sumHandValue}(\mathrm{nonAceValue}, \mathrm{aces1}, \mathrm{aces11}) \geq 22
+\end{aligned} $$
 
+Another way of saying that, if we have two Aces worth 11, we would already go bust!
+
+## Finally...
+The only problem that remains is to determine whether `aces11` is 0 or 1. Suppose that the `distribute_aces` function determines that `aces11` equals 1. If the function meets the property specified above, then `sum_hand_value(nonAceValue, aces1, aces11)` must not only be less than or equal to 21, but the alternate possibility `sum_hand_value(nonAceValue, aces1 + 1, 0)` must not result in a greater value that also does not exceed 21.
+
+First off, suppose that `aces11 == 1`. Then,
+
+$$ \begin{aligned} 
+\mathrm{aces11} = 1 \\
+\mathrm{sumHandValue}(\mathrm{nonAceValue}, \mathrm{aces1}, 1) < 22 \\
+\mathrm{nonAceValue} + \mathrm{aces1} + 11 < 22 \\
+\mathrm{nonAceValue} + \mathrm{aces1} = \mathrm{nonAceValue} + \mathrm{aces} - 1 < 11 \\
+\mathrm{nonAceValue} + \mathrm{aces} < 12
+\end{aligned} $$
+
+Which leads us to our answer: if `nonAceValue + aces < 12`, then `aces11 == 1`. Otherwise, `aces11 == 0`.
+
+```python
+def distribute_aces(nonAceValue, numAces):
+  if nonAceValue + numAces > 21:
+    return (numAces, 0)
+  if nonAceValue + aces < 12:
+    aces11 = 1
+  else:
+    aces11 = 0
+  # ezpz, (aces1, aces11) is equivalent to (numAces - aces11)
+  return (numAces - aces11, aces11)
+```
+
+Now we can complete the `calc_hand_value` function:
+
+```python
+# Takes a list of Cards and returns an int
+def calc_hand_value(hand):
+  nonAces = [card for card in hand if card != Card.ACE] # Yields all the cards that are not Aces.
+  numAces = len(hand) - len(nonAces) # All the cards remaining
+  nonAceValue = sum([calc_card_value(card) for card in nonAces]) # Yields the total value of all the non-Ace cards
+  aces1, aces11 = distribute_aces(nonAceValue, numAces)
+  return sum_hand_value(nonAceValue, aces1, aces11)
+```

@@ -128,25 +128,25 @@ def distribute_aces(nonAceValue, numAces):
 
 Furthermore, note that since the value `sum_hand_value(nonAceValue, aces1, aces11)` must not exceed 21 if possible,
 
-$$ \begin{aligned} \color{cyan}{\mathrm{sumHandValue}}(\mathrm{nonAceValue}, \mathrm{aces1}, \mathrm{aces11}) \leq 21 \\
-\mathrm{nonAceValue} + \mathrm{aces1} + 11 * \mathrm{aces11} \leq 21 \\
-11 * \mathrm{aces11} \leq 21 - (\mathrm{nonAceValue} + \mathrm{aces1})  \\
-11 * \mathrm{aces11} < 22 - (\mathrm{nonAceValue} + \mathrm{aces1})  \\
+$$ \begin{aligned} \color{cyan}{\mathrm{sumHandValue}}(\color{magenta}{\mathrm{nonAceValue}}, \color{yellow}{\mathrm{aces1}}, \color{yellow}{\mathrm{aces11}}) \leq 21 \\
+\color{magenta}{\mathrm{nonAceValue}} + \color{yellow}{\mathrm{aces1}} + 11 * \color{yellow}{\mathrm{aces11}} \leq 21 \\
+11 * \color{yellow}{\mathrm{aces11}} \leq 21 - (\color{magenta}{\mathrm{nonAceValue}} + \color{yellow}{\mathrm{aces1}})  \\
+11 * \color{yellow}{\mathrm{aces11}} < 22 - (\color{magenta}{\mathrm{nonAceValue}} + \color{yellow}{\mathrm{aces1}})  \\
 \quad \text{[as card values are integers]} \\ 
-11 * \mathrm{aces11} < 22 - (\mathrm{nonAceValue} + \mathrm{aces1}) < 22 \\
+11 * \color{yellow}{\mathrm{aces11}} < 22 - (\color{magenta}{\mathrm{nonAceValue}} + \color{yellow}{\mathrm{aces1}}) < 22 \\
 \text{[as card values are positive]} \\
-11 * \mathrm{aces11} < 22 \\
-\Rightarrow \mathrm{aces11} < 2
+11 * \color{yellow}{\mathrm{aces11}} < 22 \\
+\Rightarrow \color{yellow}{\mathrm{aces11}} < 2
 \end{aligned} $$
 
 It follows that there are only two possibilities for `aces11`: 0 and 1, as it must be less than 2. All that is left is to determine whether `aces11` should be 0 or 1. Another way to prove this is by assuming `aces11 >= 2`,
 
 $$ \begin{aligned}
-\mathrm{aces11} \geq 2 \\
-11 * \mathrm{aces11} \geq 22 \\
-\mathrm{nonAceValue} + \mathrm{aces1} + 11 * \mathrm{aces11} \geq 22 \\
+\color{yellow}{\mathrm{aces11}} \geq 2 \\
+11 * \color{yellow}{\mathrm{aces11}} \geq 22 \\
+\color{magenta}{\mathrm{nonAceValue}} + \color{yellow}{\mathrm{aces1}} + 11 * \color{yellow}{\mathrm{aces11}} \geq 22 \\
 \quad \text{[as card values are positive]} \\
-\Rightarrow \color{cyan}{\mathrm{sumHandValue}}(\mathrm{nonAceValue}, \mathrm{aces1}, \mathrm{aces11}) \geq 22
+\Rightarrow \color{cyan}{\mathrm{sumHandValue}}(\color{magenta}{\mathrm{nonAceValue}}, \color{yellow}{\mathrm{aces1}}, \color{yellow}{\mathrm{aces11}}) \geq 22
 \end{aligned} $$
 
 Another way of saying that, if we have two Aces worth 11, we would already go bust!
@@ -157,11 +157,11 @@ The only problem that remains is to determine whether `aces11` is 0 or 1. Suppos
 First off, suppose that `aces11 == 1`. Then,
 
 $$ \begin{aligned} 
-\mathrm{aces11} = 1 \\
-\color{cyan}{\mathrm{sumHandValue}}(\mathrm{nonAceValue}, \mathrm{aces1}, 1) < 22 \\
-\mathrm{nonAceValue} + \mathrm{aces1} + 11 < 22 \\
-\mathrm{nonAceValue} + \mathrm{aces1} = \mathrm{nonAceValue} + \mathrm{aces} - 1 < 11 \\
-\mathrm{nonAceValue} + \mathrm{aces} < 12
+\color{yellow}{\mathrm{aces11}} = 1 \\
+\color{cyan}{\mathrm{sumHandValue}}(\color{magenta}{\mathrm{nonAceValue}}, \color{yellow}{\mathrm{aces1}}, 1) < 22 \\
+\color{magenta}{\mathrm{nonAceValue}} + \color{yellow}{\mathrm{aces1}} + 11 < 22 \\
+\color{magenta}{\mathrm{nonAceValue}} + \color{yellow}{\mathrm{aces1}} = \color{magenta}{\mathrm{nonAceValue}} + \mathrm{aces} - 1 < 11 \\
+\color{magenta}{\mathrm{nonAceValue}} + \mathrm{aces} < 12
 \end{aligned} $$
 
 Which leads us to our answer: if `nonAceValue + aces < 12`, then `aces11 == 1`. Otherwise, `aces11 == 0`.
@@ -221,7 +221,7 @@ By contrast, we precisely stated our problem, and then used the power of reasoni
 - `sum_hand_value(nonAceValue, other_aces1, other_aces11)` is greater than `sum_hand_value(nonAceValue, aces1, aces11)` and
 - `sum_hand_value(nonAceValue, other_aces1, other_aces11)` is less than or equal to 21.
 
-**Proof:** Suppose that \\( \mathrm{nonAceValue} + \mathrm{numAces} \leq 21 \\) - otherwise it would be impossible to not go over 21. There are only two possibilities for `aces11`, \\( \mathrm{aces11} \in \\{0, 1\\} \\). Suppose that the returned value \\( \mathrm{aces11} = 1 \\), which only occurs when \\( \mathrm{nonAceValue} + \mathrm{aces} < 12 \\) according to the body of the function, 
+**Proof:** Suppose that \\( \color{magenta}{\mathrm{nonAceValue}} + \mathrm{numAces} \leq 21 \\) - otherwise it would be impossible to not go over 21. There are only two possibilities for `aces11`, \\( \color{yellow}{\mathrm{aces11}} \in \\{0, 1\\} \\). Suppose that the returned value \\( \color{yellow}{\mathrm{aces11}} = 1 \\), which only occurs when \\( \color{magenta}{\mathrm{nonAceValue}} + \mathrm{aces} < 12 \\) according to the body of the function, 
 
 ```python
 if nonAceValue + aces < 12:
@@ -231,31 +231,31 @@ if nonAceValue + aces < 12:
 To prove that the sum does not exceed 21,
 
 $$ \begin{aligned}
-\mathrm{nonAceValue} + \mathrm{aces} < 12 \\
-\mathrm{nonAceValue} + \mathrm{aces1} = \mathrm{nonAceValue} + \mathrm{aces} - 1 < 11 \\
-\mathrm{nonAceValue} + \mathrm{aces1} + 11 < 22 \\
+\color{magenta}{\mathrm{nonAceValue}} + \mathrm{aces} < 12 \\
+\color{magenta}{\mathrm{nonAceValue}} + \color{yellow}{\mathrm{aces1}} = \color{magenta}{\mathrm{nonAceValue}} + \mathrm{aces} - 1 < 11 \\
+\color{magenta}{\mathrm{nonAceValue}} + \color{yellow}{\mathrm{aces1}} + 11 < 22 \\
 \text{[as aces11 is equal to 1]} \\
-\color{cyan}{\mathrm{sumHandValue}}(\mathrm{nonAceValue}, \mathrm{aces1}, 1) < 22 \\
+\color{cyan}{\mathrm{sumHandValue}}(\color{magenta}{\mathrm{nonAceValue}}, \color{yellow}{\mathrm{aces1}}, 1) < 22 \\
 \end{aligned} $$
 
-The only other possibility is \\( \mathrm{aces11} = 0 \\). However,
+The only other possibility is \\( \color{yellow}{\mathrm{aces11}} = 0 \\). However,
 
 $$
 \begin{aligned} 
-\color{cyan}{\mathrm{sumHandValue}}(\mathrm{nonAceValue}, \mathrm{aces1}, 1) - \color{cyan}{\mathrm{sumHandValue}}(\mathrm{nonAceValue}, \mathrm{aces1} + 1, 0) \\
-= (\mathrm{nonAceValue} + \mathrm{aces1} + 11) - (\mathrm{nonAceValue} + \mathrm{aces1} + 1) = 10 \\
-\Rightarrow \color{cyan}{\mathrm{sumHandValue}}(\mathrm{nonAceValue}, \mathrm{aces1}, 1) > \color{cyan}{\mathrm{sumHandValue}}(\mathrm{nonAceValue}, \mathrm{aces1} + 1, 0)
+\color{cyan}{\mathrm{sumHandValue}}(\color{magenta}{\mathrm{nonAceValue}}, \color{yellow}{\mathrm{aces1}}, 1) - \color{cyan}{\mathrm{sumHandValue}}(\color{magenta}{\mathrm{nonAceValue}}, \color{yellow}{\mathrm{aces1}} + 1, 0) \\
+= (\color{magenta}{\mathrm{nonAceValue}} + \color{yellow}{\mathrm{aces1}} + 11) - (\color{magenta}{\mathrm{nonAceValue}} + \color{yellow}{\mathrm{aces1}} + 1) = 10 \\
+\Rightarrow \color{cyan}{\mathrm{sumHandValue}}(\color{magenta}{\mathrm{nonAceValue}}, \color{yellow}{\mathrm{aces1}}, 1) > \color{cyan}{\mathrm{sumHandValue}}(\color{magenta}{\mathrm{nonAceValue}}, \color{yellow}{\mathrm{aces1}} + 1, 0)
 \end{aligned}
 $$
 
-The other possibility of \\( \mathrm{aces11} = 0 \\)  does not result in a greater hand value. 
+The other possibility of \\( \color{yellow}{\mathrm{aces11}} = 0 \\)  does not result in a greater hand value. 
 
-Now suppose that the function returns \\( \mathrm{aces11} = 0 \\), which occurs if \\( \mathrm{nonAceValue} + \mathrm{aces} \geq 12 \\). Either it is not possible to not go over 21, or, the other case \\( \mathrm{aces11} = 1 \\) would go over 21:
+Now suppose that the function returns \\( \color{yellow}{\mathrm{aces11}} = 0 \\), which occurs if \\( \color{magenta}{\mathrm{nonAceValue}} + \mathrm{aces} \geq 12 \\). Either it is not possible to not go over 21, or, the other case \\( \color{yellow}{\mathrm{aces11}} = 1 \\) would go over 21:
 
 $$
 \begin{aligned} 
-\mathrm{nonAceValue} + \mathrm{aces} \geq 12 \\
-\mathrm{nonAceValue} + (\mathrm{aces} - 1) + 11 = \mathrm{nonAceValue} + (\mathrm{aces} + 10) \\
+\color{magenta}{\mathrm{nonAceValue}} + \mathrm{aces} \geq 12 \\
+\color{magenta}{\mathrm{nonAceValue}} + (\mathrm{aces} - 1) + 11 = \color{magenta}{\mathrm{nonAceValue}} + (\mathrm{aces} + 10) \\
 \text{[setting aces11 to 1]} \\
 \geq 22
 \end{aligned}

@@ -128,7 +128,7 @@ def distribute_aces(nonAceValue, numAces):
 
 Furthermore, note that since the value `sum_hand_value(nonAceValue, aces1, aces11)` must not exceed 21 if possible,
 
-$$ \begin{aligned} \mathrm{sumHandValue}(\mathrm{nonAceValue}, \mathrm{aces1}, \mathrm{aces11}) \leq 21 \\
+$$ \begin{aligned} \color{cyan}{\mathrm{sumHandValue}}(\mathrm{nonAceValue}, \mathrm{aces1}, \mathrm{aces11}) \leq 21 \\
 \mathrm{nonAceValue} + \mathrm{aces1} + 11 * \mathrm{aces11} \leq 21 \\
 11 * \mathrm{aces11} \leq 21 - (\mathrm{nonAceValue} + \mathrm{aces1})  \\
 11 * \mathrm{aces11} < 22 - (\mathrm{nonAceValue} + \mathrm{aces1})  \\
@@ -146,7 +146,7 @@ $$ \begin{aligned}
 11 * \mathrm{aces11} \geq 22 \\
 \mathrm{nonAceValue} + \mathrm{aces1} + 11 * \mathrm{aces11} \geq 22 \\
 \quad \text{[as card values are positive]} \\
-\Rightarrow \mathrm{sumHandValue}(\mathrm{nonAceValue}, \mathrm{aces1}, \mathrm{aces11}) \geq 22
+\Rightarrow \color{cyan}{\mathrm{sumHandValue}}(\mathrm{nonAceValue}, \mathrm{aces1}, \mathrm{aces11}) \geq 22
 \end{aligned} $$
 
 Another way of saying that, if we have two Aces worth 11, we would already go bust!
@@ -158,7 +158,7 @@ First off, suppose that `aces11 == 1`. Then,
 
 $$ \begin{aligned} 
 \mathrm{aces11} = 1 \\
-\mathrm{sumHandValue}(\mathrm{nonAceValue}, \mathrm{aces1}, 1) < 22 \\
+\color{cyan}{\mathrm{sumHandValue}}(\mathrm{nonAceValue}, \mathrm{aces1}, 1) < 22 \\
 \mathrm{nonAceValue} + \mathrm{aces1} + 11 < 22 \\
 \mathrm{nonAceValue} + \mathrm{aces1} = \mathrm{nonAceValue} + \mathrm{aces} - 1 < 11 \\
 \mathrm{nonAceValue} + \mathrm{aces} < 12
@@ -235,16 +235,16 @@ $$ \begin{aligned}
 \mathrm{nonAceValue} + \mathrm{aces1} = \mathrm{nonAceValue} + \mathrm{aces} - 1 < 11 \\
 \mathrm{nonAceValue} + \mathrm{aces1} + 11 < 22 \\
 \text{[as aces11 is equal to 1]} \\
-\mathrm{sumHandValue}(\mathrm{nonAceValue}, \mathrm{aces1}, 1) < 22 \\
+\color{cyan}{\mathrm{sumHandValue}}(\mathrm{nonAceValue}, \mathrm{aces1}, 1) < 22 \\
 \end{aligned} $$
 
 The only other possibility is \\( \mathrm{aces11} = 0 \\). However,
 
 $$
 \begin{aligned} 
-\mathrm{sumHandValue}(\mathrm{nonAceValue}, \mathrm{aces1}, 1) - \mathrm{sumHandValue}(\mathrm{nonAceValue}, \mathrm{aces1} + 1, 0) \\
+\color{cyan}{\mathrm{sumHandValue}}(\mathrm{nonAceValue}, \mathrm{aces1}, 1) - \color{cyan}{\mathrm{sumHandValue}}(\mathrm{nonAceValue}, \mathrm{aces1} + 1, 0) \\
 = (\mathrm{nonAceValue} + \mathrm{aces1} + 11) - (\mathrm{nonAceValue} + \mathrm{aces1} + 1) = 10 \\
-\Rightarrow \mathrm{sumHandValue}(\mathrm{nonAceValue}, \mathrm{aces1}, 1) > \mathrm{sumHandValue}(\mathrm{nonAceValue}, \mathrm{aces1} + 1, 0)
+\Rightarrow \color{cyan}{\mathrm{sumHandValue}}(\mathrm{nonAceValue}, \mathrm{aces1}, 1) > \color{cyan}{\mathrm{sumHandValue}}(\mathrm{nonAceValue}, \mathrm{aces1} + 1, 0)
 \end{aligned}
 $$
 

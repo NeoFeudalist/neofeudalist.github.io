@@ -90,4 +90,7 @@ We want to find a function `distribute_aces` that, given the total value of all 
 
 **Property:** `sum_hand_value(non_ace_value, aces1, aces11)` must be as close to 21 as possible without going over. 
 
-That is, for a pair `(aces1, aces11)` returned by `distribute_aces`, there must not be another pair `(other_aces1, other_aces11)` that may be returned by `distribute_aces` such that `sum_hand_value(non_ace_value, other_aces1, other_aces11) > sum_hand_value(non_ace_value, aces1, aces11)` and `sum_hand_value(non_ace_value, aces1, aces11) <= 21`.
+That is, for a pair `(aces1, aces11)` returned by `distribute_aces`, there must not be another pair `(other_aces1, other_aces11)` that may be returned by `distribute_aces` such that:
+
+- `sum_hand_value(non_ace_value, other_aces1, other_aces11)` is greater than `sum_hand_value(non_ace_value, aces1, aces11)` and
+- `sum_hand_value(non_ace_value, aces1, aces11)` is less than or equal to 21.

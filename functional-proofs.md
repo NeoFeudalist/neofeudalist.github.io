@@ -29,4 +29,65 @@ class Card:
   KING = 13
 ```
 
-In Python 3.4 or higher there is an enum type but it isn't needed for our purposes. Now how do we calculate the value of a hand, or a list of `Card`s? 
+In Python 3.4 or higher there is an enum type but this ain't broke so we don't need it. Now how do we calculate the value of a hand, or a list of `Card`s? Well, let's start with calculating the value of a single card. The easiest cards are from `TWO` to `TEN`:
+
+```python
+# Takes a Card and returns an int
+def calc_card_value(card):
+  if card >= Card.TWO and card <= Card.TEN:
+    return card
+```
+
+Since each card from `TWO` to `TEN` has a value equal to its value in Blackjack, it's easy. The `JACK`, `QUEEN`, and `KING` each have a value of 10:
+
+```python
+# Takes a Card and returns an int
+def calc_card_value(card):
+  if card >= Card.TWO and card <= Card.TEN:
+    return card
+  elif card >= Card.JACK:
+    return 10
+```
+
+That leaves us with the Aces. But hold up, they can either be 1 or 11, which presents a problem. `calc_value` was supposed to return an integer, but obviously the Ace presents us with a problem. Let's return 0 when the card is an Ace for now:
+
+```python
+# Takes a Card and returns an int
+def calc_card_value(card):
+  if card >= Card.TWO and card <= Card.TEN:
+    return card
+  elif card >= Card.JACK:
+    return 10
+  else: # card == Card.ACE is the only possible case
+    return 0
+```
+
+## First Steps
+By pondering over the problem a little, we can divide the problem into two parts: calculating the value of the cards that aren't Aces, and calculating the value of the Aces. The total value of a Blackjack hand can be expressed as a function:
+
+```python
+def sum_hand_value(non_ace_value, aces1, aces11):
+  return non_ace_value + aces1 + 11 * aces11;
+```
+
+`non_ace_value` is the value of the non-Ace cards calculated by summing the values returned by `calc_value` on those cards. `aces1 + aces11` is equal to the number of Aces in the hand, where `aces1` are the number of Aces considered to be worth 1, and `aces11` are the Aces considered to be worth 11. Let `calc_hand_value` be the function that calculates the value of a list of `Card`s. First, we split the list into non-Ace cards and Ace cards:
+
+```python
+# Takes a list of Cards and returns an int
+def calc_hand_value(hand):
+  non_aces = [card for card in hand if card != Card.ACE] # Yields all the cards that are not Aces.
+  num_aces = len(hand) - len(non_aces) # All the cards remaining
+  non_ace_value = sum([calc_card_value(card) for card in non_aces]) # Yields the total value of all the non-Ace cards
+  aces1 = ?
+  aces11 = ?
+  return sum_hand_value(non_ace_value, aces1, aces11)
+```
+
+The problem remains: find the correct value of `aces1` and `aces11`.
+
+## The problem
+We want to find a function `distribute_aces` that, given the total value of all the non-Ace cards, `non_ace_value`, and the number of Aces, `num_aces`, yields a pair `(aces1, aces11)` that tells us how many of the Aces should be worth 1 or worth 11. The answer returned by `distribute_aces` must satisfy a property:
+
+**Property:** `sum_hand_value(non_ace_value, aces1, aces11)` must be as close to 21 as possible without going over. 
+
+That is, for a pair `(aces1, aces11)` returned by `distribute_aces`, there must not be another pair `(other_aces1, other_aces11)` that may be returned by `distribute_aces` such that `sum_hand_value(non_ace_value, other_aces1, other_aces11) > sum_hand_value(non_ace_value, aces1, aces11)` and `sum_hand_value(non_ace_value, aces1, aces11) <= 21`.

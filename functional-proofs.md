@@ -129,4 +129,5 @@ Furthermore, note that since the value `sum_hand_value(non_ace_value, aces1, ace
 \[\begin{align}
 \mathrm{sum\_hand\_value}(\mathrm{non\_ace\_value}, \mathrm{aces1}, \mathrm{aces11}) \leq 21 \\
 \mathrm{non\_ace\_value} + \mathrm{aces1} + 11 * \mathrm{aces11} \leq 21 \\
+
 \end{align}\]

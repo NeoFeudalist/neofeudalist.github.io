@@ -129,5 +129,16 @@ def distribute_aces(nonAceValue, numAces):
 Furthermore, note that since the value `sum_hand_value(nonAceValue, aces1, aces11)` must not exceed 21 if possible,
 
 $$ \begin{aligned} \mathrm{sumHandValue}(\mathrm{nonAceValue}, \mathrm{aces1}, \mathrm{aces11}) \leq 21 \\
-\mathrm{nonAceValue} + \mathrm{aces1} + 11 * \mathrm{aces11} \leq 21
+\mathrm{nonAceValue} + \mathrm{aces1} + 11 * \mathrm{aces11} \leq 21 \\
+11 * \mathrm{aces11} \leq 21 - (\mathrm{nonAceValue} + \mathrm{aces1})  \\
+11 * \mathrm{aces11} < 22 - (\mathrm{nonAceValue} + \mathrm{aces1})  \\
+\quad \text{[as card values are integers]} \\ 
+11 * \mathrm{aces11} < 22 - (\mathrm{nonAceValue} + \mathrm{aces1}) < 22 \\
+\text{[as card values are positive]} \\
+11 * \mathrm{aces11} < 22 \\
+\mathrm{aces11} < 2
 \end{aligned} $$
+
+It follows that there are only two possibilities for `aces11`: 0 and 1, as it must be less than 2. All that is left is to determine whether `aces11` should be 0 or 1.
+
+

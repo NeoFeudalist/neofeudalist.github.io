@@ -221,7 +221,7 @@ By contrast, we precisely stated our problem, and then used the power of reasoni
 - `sum_hand_value(nonAceValue, other_aces1, other_aces11)` is greater than `sum_hand_value(nonAceValue, aces1, aces11)` and
 - `sum_hand_value(nonAceValue, other_aces1, other_aces11)` is less than or equal to 21.
 
-**Proof:** Suppose that \( \mathrm{nonAceValue} + \mathrm{numAces} \leq 21 \) - otherwise it would be impossible to not go over 21. There are only two possibilities for `aces11`, \( \mathrm{aces11} \in \{0, 1\} \). Suppose that the returned value \( \mathrm{aces11} = 1 \), which only occurs when \( \mathrm{nonAceValue} + \mathrm{aces} < 12 \) according to the body of the function, 
+**Proof:** Suppose that \\( \mathrm{nonAceValue} + \mathrm{numAces} \leq 21 \\) - otherwise it would be impossible to not go over 21. There are only two possibilities for `aces11`, \\( \mathrm{aces11} \in \{0, 1\} \\). Suppose that the returned value \\( \mathrm{aces11} = 1 \\), which only occurs when \\( \mathrm{nonAceValue} + \mathrm{aces} < 12 \\) according to the body of the function, 
 
 ```python
 if nonAceValue + aces < 12:
@@ -237,7 +237,7 @@ $$ \begin{aligned}
 \mathrm{sumHandValue}(\mathrm{nonAceValue}, \mathrm{aces1}, 1) < 22 \\
 \end{aligned} $$
 
-The only other possibility is \( \mathrm{aces11} = 0 \). However,
+The only other possibility is \\( \mathrm{aces11} = 0 \\). However,
 
 $$
 \begin{aligned} 
@@ -247,9 +247,9 @@ $$
 \end{aligned}
 $$
 
-The other possibility of \( \mathrm{aces11} = 0 \)  does not result in a greater hand value. 
+The other possibility of \\( \mathrm{aces11} = 0 \\)  does not result in a greater hand value. 
 
-Now suppose that the function returns \( \mathrm{aces11} = 0 \), which occurs if \( \mathrm{nonAceValue} + \mathrm{aces} \geq 12 \). Either it is not possible to not go over 21, or, the other case \( \mathrm{aces11} = 1 \) would go over 21:
+Now suppose that the function returns \\( \mathrm{aces11} = 0 \\), which occurs if \\( \mathrm{nonAceValue} + \mathrm{aces} \geq 12 \\). Either it is not possible to not go over 21, or, the other case \\( \mathrm{aces11} = 1 \\) would go over 21:
 
 $$
 \begin{aligned} 

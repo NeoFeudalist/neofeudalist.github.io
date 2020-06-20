@@ -126,7 +126,6 @@ def distribute_aces(nonAceValue, numAces):
 
 Furthermore, note that since the value `sum_hand_value(nonAceValue, aces1, aces11)` must not exceed 21 if possible,
 
-\[\begin{aligned}
-\mathrm{sumHandValue}(\mathrm{nonAceValue}, \mathrm{aces1}, \mathrm{aces11}) \leq 21 \\
-\mathrm{nonAceValue} + \mathrm{aces1} + 11 * \mathrm{aces11} \leq 21 \\
-\end{aligned}\]
+$$ \begin{aligned} \mathrm{sumHandValue}(\mathrm{nonAceValue}, \mathrm{aces1}, \mathrm{aces11}) \leq 21 \\
+\mathrm{nonAceValue} + \mathrm{aces1} + 11 * \mathrm{aces11} \leq 21
+\end{aligned} $$

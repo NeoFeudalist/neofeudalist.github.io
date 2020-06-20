@@ -66,21 +66,21 @@ def calc_card_value(card):
 By pondering over the problem a little, we can divide the problem into two parts: calculating the value of the cards that aren't Aces, and calculating the value of the Aces. The total value of a Blackjack hand can be expressed as a function:
 
 ```python
-def sum_hand_value(non_ace_value, aces1, aces11):
-  return non_ace_value + aces1 + 11 * aces11
+def sum_hand_value(nonAceValue, aces1, aces11):
+  return nonAceValue + aces1 + 11 * aces11
 ```
 
-`non_ace_value` is the value of the non-Ace cards calculated by summing the values returned by `calc_value` on those cards. `aces1 + aces11` is equal to the number of Aces in the hand, where `aces1` are the number of Aces considered to be worth 1, and `aces11` are the Aces considered to be worth 11. Let `calc_hand_value` be the function that calculates the value of a list of `Card`s. First, we split the list into non-Ace cards and Ace cards:
+`nonAceValue` is the value of the non-Ace cards calculated by summing the values returned by `calc_value` on those cards. `aces1 + aces11` is equal to the number of Aces in the hand, where `aces1` are the number of Aces considered to be worth 1, and `aces11` are the Aces considered to be worth 11. Let `calc_hand_value` be the function that calculates the value of a list of `Card`s. First, we split the list into non-Ace cards and Ace cards:
 
 ```python
 # Takes a list of Cards and returns an int
 def calc_hand_value(hand):
-  non_aces = [card for card in hand if card != Card.ACE] # Yields all the cards that are not Aces.
-  num_aces = len(hand) - len(non_aces) # All the cards remaining
-  non_ace_value = sum([calc_card_value(card) for card in non_aces]) # Yields the total value of all the non-Ace cards
+  nonAces = [card for card in hand if card != Card.ACE] # Yields all the cards that are not Aces.
+  numAces = len(hand) - len(nonAces) # All the cards remaining
+  nonAceValue = sum([calc_card_value(card) for card in nonAces]) # Yields the total value of all the non-Ace cards
   aces1 = ?
   aces11 = ?
-  return sum_hand_value(non_ace_value, aces1, aces11)
+  return sum_hand_value(nonAceValue, aces1, aces11)
 ```
 
 The problem remains: find the correct value of `aces1` and `aces11`.
@@ -88,46 +88,45 @@ The problem remains: find the correct value of `aces1` and `aces11`.
 ## The goal
 We want to find a function `distribute_aces` that:
 
-- **given** the total value of all the non-Ace cards, `non_ace_value`, and the number of Aces, `num_aces`,
+- **given** the total value of all the non-Ace cards, `nonAceValue`, and the number of Aces, `numAces`,
 - **returns** a pair `(aces1, aces11)` that tells us how many of the Aces should be worth 1 or worth 11.
 
 The answer returned by `distribute_aces` must satisfy a property:distr
 
-**Property:** If `distribute_aces(non_ace_value, num_aces) == (aces1, aces11)`, then `sum_hand_value(non_ace_value, aces1, aces11)` must be as close to 21 as possible without going over. 
+**Property:** If `distribute_aces(nonAceValue, numAces) == (aces1, aces11)`, then `sum_hand_value(nonAceValue, aces1, aces11)` must be as close to 21 as possible without going over. 
 
 That is, for a pair `(aces1, aces11)` returned by `distribute_aces`, there must not be another pair `(other_aces1, other_aces11)` that may be returned by `distribute_aces` such that:
 
-- `sum_hand_value(non_ace_value, other_aces1, other_aces11)` is greater than `sum_hand_value(non_ace_value, aces1, aces11)` and
-- `sum_hand_value(non_ace_value, aces1, aces11)` is less than or equal to 21.
+- `sum_hand_value(nonAceValue, other_aces1, other_aces11)` is greater than `sum_hand_value(nonAceValue, aces1, aces11)` and
+- `sum_hand_value(nonAceValue, aces1, aces11)` is less than or equal to 21.
 
 Properties are important because they give us a goal to achieve, and it is our job to write a function and *prove* that it meets the property. This is in contrast to the usual method of unit testing where we just write a bunch of input-output pairs and hope we didn't miss an edge or corner case. 
 
 ## Do the easy stuff first
-Consider the case where `non_ace_value + num_aces > 21`. Obviously, the player has already busted because even if all their Aces are considered to be worth 1, they'll still go over 21. The usual convention is to just make all the Aces worth 1 anyways to minimize their sorrow.
+Consider the case where `nonAceValue + numAces > 21`. Obviously, the player has already busted because even if all their Aces are considered to be worth 1, they'll still go over 21. The usual convention is to just make all the Aces worth 1 anyways to minimize their sorrow.
 
 ```python
-def distribute_aces(non_ace_value, num_aces):
-  if non_ace_value + num_aces > 21:
-    return (num_aces, 0)
+def distribute_aces(nonAceValue, numAces):
+  if nonAceValue + numAces > 21:
+    return (numAces, 0)
 ```
 
 ## Simplify the problem
-We have to choose two values `aces1` and `aces11`. But we can simplify the problem by noticing that `aces1` is dependent on the value of `aces11`, as `aces1 == num_aces - aces11`. Since `num_aces` is already known in advance, we only have to choose a value of `aces11` and we will get `aces1` for free.
+We have to choose two values `aces1` and `aces11`. But we can simplify the problem by noticing that `aces1` is dependent on the value of `aces11`, as `aces1 == numAces - aces11`. Since `numAces` is already known in advance, we only have to choose a value of `aces11` and we will get `aces1` for free.
 
 ```python
-def distribute_aces(non_ace_value, num_aces):
-  if non_ace_value + num_aces > 21:
-    return (num_aces, 0)
+def distribute_aces(nonAceValue, numAces):
+  if nonAceValue + numAces > 21:
+    return (numAces, 0)
   # choose aces11:
   aces11 = ?
-  # ezpz, (aces1, aces11) is equivalent to (num_aces - aces11)
-  return (num_aces - aces11, aces11)
+  # ezpz, (aces1, aces11) is equivalent to (numAces - aces11)
+  return (numAces - aces11, aces11)
 ```
 
-Furthermore, note that since the value `sum_hand_value(non_ace_value, aces1, aces11)` must not exceed 21 if possible,
+Furthermore, note that since the value `sum_hand_value(nonAceValue, aces1, aces11)` must not exceed 21 if possible,
 
 \[\begin{align}
-\mathrm{sum\\_hand\\_value}(\mathrm{non\\_ace\\_value}, \mathrm{aces1}, \mathrm{aces11}) \leq 21 \\
-\mathrm{non\\_ace\\_value} + \mathrm{aces1} + 11 * \mathrm{aces11} \leq 21 \\
-
+\mathrm{sumHandValue}(\mathrm{nonAceValue}, \mathrm{aces1}, \mathrm{aces11}) \leq 21 \\
+\mathrm{nonAceValue} + \mathrm{aces1} + 11 * \mathrm{aces11} \leq 21 \\
 \end{align}\]

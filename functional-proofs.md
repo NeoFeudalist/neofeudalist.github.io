@@ -97,7 +97,7 @@ The answer returned by `distribute_aces` must satisfy a property:
 
 **Property:** If `distribute_aces(nonAceValue, numAces) == (aces1, aces11)`, then `sum_hand_value(nonAceValue, aces1, aces11)` must be as close to 21 as possible without going over.
 
-That is, for a pair `(aces1, aces11)` returned by `distribute_aces`, there must not be another pair `(other_aces1, other_aces11)` that may be returned by `distribute_aces` such that:
+That is, if it is impossible to not go bust, `distribute_aces` can return anything. Otherwise, for a pair `(aces1, aces11)` returned by `distribute_aces`, it is true that `sum_hand_value(nonAceValue, aces1, aces11) <= 21`, and there must not be another pair `(other_aces1, other_aces11)` that may be returned by `distribute_aces` such that:
 
 - `sum_hand_value(nonAceValue, other_aces1, other_aces11)` is greater than `sum_hand_value(nonAceValue, aces1, aces11)` and
 - `sum_hand_value(nonAceValue, other_aces1, other_aces11)` is less than or equal to 21.
@@ -181,7 +181,27 @@ def distribute_aces(nonAceValue, numAces):
 Now we can complete the `calc_hand_value` function:
 
 ```python
-# Takes a list of Cards and returns an int
+def calc_card_value(card):
+  if card >= Card.TWO and card <= Card.TEN:
+    return card
+  elif card >= Card.JACK:
+    return 10
+ # else, card == Card.ACE is the only possible case
+ return 0
+
+def sum_hand_value(nonAceValue, aces1, aces11):
+  return nonAceValue + aces1 + 11 * aces11
+
+def distribute_aces(nonAceValue, numAces):
+  if nonAceValue + numAces > 21:
+    return (numAces, 0)
+  if nonAceValue + aces < 12:
+    aces11 = 1
+  else:
+    aces11 = 0
+  # ezpz, (aces1, aces11) is equivalent to (numAces - aces11)
+  return (numAces - aces11, aces11)
+
 def calc_hand_value(hand):
   nonAces = [card for card in hand if card != Card.ACE] # Yields all the cards that are not Aces.
   numAces = len(hand) - len(nonAces) # All the cards remaining
@@ -189,3 +209,55 @@ def calc_hand_value(hand):
   aces1, aces11 = distribute_aces(nonAceValue, numAces)
   return sum_hand_value(nonAceValue, aces1, aces11)
 ```
+
+## Conclusion
+Most programming happens in what I can only describe as a "write first, think later" process. We write the code first and hope that it works. If we're especially dilligent, we'll write some unit tests to make sure we didn't screw up that badly, but even then unit tests are not a guarantee that our program works. For this particular problem, most programmers would not test or even know what the edge cases are for this program without some prior thought.
+
+By contrast, we precisely stated our problem, and then used the power of reasoning to essentially calculate a correct program. We don't have to write any unit tests for this program, as we've derived each bit of code by logical steps. Our Blackjack program is "correct by construction".
+
+## Bonus: Proof of correctness of `distribute_aces`
+**Theorem:** `distribute_aces` fulfills the property specified above, that, for a pair `(aces1, aces11)` returned by `distribute_aces`, it is true that `sum_hand_value(nonAceValue, aces1, aces11) <= 21`, and there must not be another pair `(other_aces1, other_aces11)` that may be returned by `distribute_aces` such that:
+
+- `sum_hand_value(nonAceValue, other_aces1, other_aces11)` is greater than `sum_hand_value(nonAceValue, aces1, aces11)` and
+- `sum_hand_value(nonAceValue, other_aces1, other_aces11)` is less than or equal to 21.
+
+**Proof:** Suppose that \( \mathrm{nonAceValue} + \mathrm{numAces} \leq 21 \) - otherwise it would be impossible to not go over 21. There are only two possibilities for `aces11`, \( \mathrm{aces11} \in \{0, 1\} \). Suppose that the returned value \( \mathrm{aces11} = 1 \), which only occurs when \( \mathrm{nonAceValue} + \mathrm{aces} < 12 \) according to the body of the function, 
+
+```python
+if nonAceValue + aces < 12:
+    aces11 = 1
+```
+
+To prove that the sum does not exceed 21,
+$$ \begin{aligned}
+\mathrm{nonAceValue} + \mathrm{aces} < 12 \\
+\mathrm{nonAceValue} + \mathrm{aces1} = \mathrm{nonAceValue} + \mathrm{aces} - 1 < 11 \\
+\mathrm{nonAceValue} + \mathrm{aces1} + 11 < 22 \\
+\text{[as aces11 is equal to 1]} \\
+\mathrm{sumHandValue}(\mathrm{nonAceValue}, \mathrm{aces1}, 1) < 22 \\
+\end{aligned} $$
+
+The only other possibility is \( \mathrm{aces11} = 0 \). However,
+
+$$
+\begin{aligned} 
+\mathrm{sumHandValue}(\mathrm{nonAceValue}, \mathrm{aces1}, 1) - \mathrm{sumHandValue}(\mathrm{nonAceValue}, \mathrm{aces1} + 1, 0) \\
+= (\mathrm{nonAceValue} + \mathrm{aces1} + 11) - (\mathrm{nonAceValue} + \mathrm{aces1} + 1) = 10 \\
+\Rightarrow \mathrm{sumHandValue}(\mathrm{nonAceValue}, \mathrm{aces1}, 1) > \mathrm{sumHandValue}(\mathrm{nonAceValue}, \mathrm{aces1} + 1, 0)
+\end{aligned}
+$$
+
+The other possibility of \( \mathrm{aces11} = 0 \)  does not result in a greater hand value. 
+
+Now suppose that the function returns \( \mathrm{aces11} = 0 \), which occurs if \( \mathrm{nonAceValue} + \mathrm{aces} \geq 12 \). Either it is not possible to not go over 21, or, the other case \( \mathrm{aces11} = 1 \) would go over 21:
+
+$$
+\begin{aligned} 
+\mathrm{nonAceValue} + \mathrm{aces} \geq 12 \\
+\mathrm{nonAceValue} + (\mathrm{aces} - 1) + 11 = \mathrm{nonAceValue} + (\mathrm{aces} + 10) \\
+\text{[setting aces11 to 1]} \\
+\geq 22
+\end{aligned}
+$$
+
+Therefore the `distribute_aces` function derived above fulfills the property.

@@ -160,8 +160,8 @@ $$ \begin{aligned}
 \color{yellow}{\mathrm{aces11}} = 1 \\
 \color{cyan}{\mathrm{sumHandValue}}(\color{magenta}{\mathrm{nonAceValue}}, \color{yellow}{\mathrm{aces1}}, 1) < 22 \\
 \color{magenta}{\mathrm{nonAceValue}} + \color{yellow}{\mathrm{aces1}} + 11 < 22 \\
-\color{magenta}{\mathrm{nonAceValue}} + \color{yellow}{\mathrm{aces1}} = \color{magenta}{\mathrm{nonAceValue}} + \mathrm{aces} - 1 < 11 \\
-\color{magenta}{\mathrm{nonAceValue}} + \mathrm{aces} < 12
+\color{magenta}{\mathrm{nonAceValue}} + \color{yellow}{\mathrm{aces1}} = \color{magenta}{\mathrm{nonAceValue}} + \color{magenta}{\mathrm{numAces}} - 1 < 11 \\
+\color{magenta}{\mathrm{nonAceValue}} + \color{magenta}{\mathrm{numAces}} < 12
 \end{aligned} $$
 
 Which leads us to our answer: if `nonAceValue + aces < 12`, then `aces11 == 1`. Otherwise, `aces11 == 0`.
@@ -223,7 +223,7 @@ Finally, I know that for this specific example, you probably could come up with 
 - `sum_hand_value(nonAceValue, other_aces1, other_aces11)` is greater than `sum_hand_value(nonAceValue, aces1, aces11)` and
 - `sum_hand_value(nonAceValue, other_aces1, other_aces11)` is less than or equal to 21.
 
-**Proof:** Suppose that \\( \color{magenta}{\mathrm{nonAceValue}} + \mathrm{numAces} \leq 21 \\) - otherwise it would be impossible to not go over 21. There are only two possibilities for `aces11`, \\( \color{yellow}{\mathrm{aces11}} \in \\{0, 1\\} \\). Suppose that the returned value \\( \color{yellow}{\mathrm{aces11}} = 1 \\), which only occurs when \\( \color{magenta}{\mathrm{nonAceValue}} + \mathrm{aces} < 12 \\) according to the body of the function, 
+**Proof:** Suppose that \\( \color{magenta}{\mathrm{nonAceValue}} + \mathrm{numAces} \leq 21 \\) - otherwise it would be impossible to not go over 21. There are only two possibilities for `aces11`, \\( \color{yellow}{\mathrm{aces11}} \in \\{0, 1\\} \\). Suppose that the returned value \\( \color{yellow}{\mathrm{aces11}} = 1 \\), which only occurs when \\( \color{magenta}{\mathrm{nonAceValue}} + \color{magenta}{\mathrm{numAces}} < 12 \\) according to the body of the function, 
 
 ```python
 if nonAceValue + aces < 12:
@@ -233,8 +233,8 @@ if nonAceValue + aces < 12:
 To prove that the sum does not exceed 21,
 
 $$ \begin{aligned}
-\color{magenta}{\mathrm{nonAceValue}} + \mathrm{aces} < 12 \\
-\color{magenta}{\mathrm{nonAceValue}} + \color{yellow}{\mathrm{aces1}} = \color{magenta}{\mathrm{nonAceValue}} + \mathrm{aces} - 1 < 11 \\
+\color{magenta}{\mathrm{nonAceValue}} + \color{magenta}{\mathrm{numAces}} < 12 \\
+\color{magenta}{\mathrm{nonAceValue}} + \color{yellow}{\mathrm{aces1}} = \color{magenta}{\mathrm{nonAceValue}} + \color{magenta}{\mathrm{numAces}} - 1 < 11 \\
 \color{magenta}{\mathrm{nonAceValue}} + \color{yellow}{\mathrm{aces1}} + 11 < 22 \\
 \text{[as aces11 is equal to 1]} \\
 \color{cyan}{\mathrm{sumHandValue}}(\color{magenta}{\mathrm{nonAceValue}}, \color{yellow}{\mathrm{aces1}}, 1) < 22 \\
@@ -252,12 +252,12 @@ $$
 
 The other possibility of \\( \color{yellow}{\mathrm{aces11}} = 0 \\)  does not result in a greater hand value. 
 
-Now suppose that the function returns \\( \color{yellow}{\mathrm{aces11}} = 0 \\), which occurs if \\( \color{magenta}{\mathrm{nonAceValue}} + \mathrm{aces} \geq 12 \\). Either it is not possible to not go over 21, or, the other case \\( \color{yellow}{\mathrm{aces11}} = 1 \\) would go over 21:
+Now suppose that the function returns \\( \color{yellow}{\mathrm{aces11}} = 0 \\), which occurs if \\( \color{magenta}{\mathrm{nonAceValue}} + \color{magenta}{\mathrm{numAces}} \geq 12 \\). Either it is not possible to not go over 21, or, the other case \\( \color{yellow}{\mathrm{aces11}} = 1 \\) would go over 21:
 
 $$
 \begin{aligned} 
-\color{magenta}{\mathrm{nonAceValue}} + \mathrm{aces} \geq 12 \\
-\color{magenta}{\mathrm{nonAceValue}} + (\mathrm{aces} - 1) + 11 = \color{magenta}{\mathrm{nonAceValue}} + (\mathrm{aces} + 10) \\
+\color{magenta}{\mathrm{nonAceValue}} + \color{magenta}{\mathrm{numAces}} \geq 12 \\
+\color{magenta}{\mathrm{nonAceValue}} + (\color{magenta}{\mathrm{numAces}} - 1) + 11 = \color{magenta}{\mathrm{nonAceValue}} + (\color{magenta}{\mathrm{numAces}} + 10) \\
 \text{[setting aces11 to 1]} \\
 \geq 22
 \end{aligned}

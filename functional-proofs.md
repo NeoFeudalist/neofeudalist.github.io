@@ -215,6 +215,8 @@ Most programming happens in what I can only describe as a "write first, think la
 
 By contrast, we precisely stated our problem, and then used the power of reasoning to essentially calculate a correct program. We don't have to write any unit tests for this program, as we've derived each bit of code by logical steps. Our Blackjack program is "correct by construction".
 
+Finally, I know that for this specific example, you probably could come up with the algorithm by just pondering for a few minutes, and it will probably be correct. *Probably.* But you can also apply this type of reasoning to many other problems, even those that may be hard to come up with your own. Stay tuned!
+
 ## Bonus: Proof of correctness of `distribute_aces`
 **Theorem:** `distribute_aces` fulfills the property specified above, that, for a pair `(aces1, aces11)` returned by `distribute_aces`, it is true that `sum_hand_value(nonAceValue, aces1, aces11) <= 21`, and there must not be another pair `(other_aces1, other_aces11)` that may be returned by `distribute_aces` such that:
 

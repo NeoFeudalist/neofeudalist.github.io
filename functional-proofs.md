@@ -170,7 +170,7 @@ Which leads us to our answer: if `nonAceValue + aces < 12`, then `aces11 == 1`. 
 def distribute_aces(nonAceValue, numAces):
   if nonAceValue + numAces > 21:
     return (numAces, 0)
-  if nonAceValue + aces < 12:
+  if nonAceValue + numAces < 12:
     aces11 = 1
   else:
     aces11 = 0
@@ -186,8 +186,8 @@ def calc_card_value(card):
     return card
   elif card >= Card.JACK:
     return 10
- # else, card == Card.ACE is the only possible case
- return 0
+  # else, card == Card.ACE is the only possible case
+  return 0
 
 def sum_hand_value(nonAceValue, aces1, aces11):
   return nonAceValue + aces1 + 11 * aces11
@@ -195,7 +195,7 @@ def sum_hand_value(nonAceValue, aces1, aces11):
 def distribute_aces(nonAceValue, numAces):
   if nonAceValue + numAces > 21:
     return (numAces, 0)
-  if nonAceValue + aces < 12:
+  if nonAceValue + numAces < 12:
     aces11 = 1
   else:
     aces11 = 0

@@ -113,4 +113,4 @@ A(r_1, r_2, \dots, r_n; c) = c \log_{10}\left(\frac{1}{n} \sum_{i=1}^n 10^{r_i /
 \approx c \left(\log_{10}\left( \frac{10^{r_1 / c}}{n} \right) \right) = c \left( \frac{r_1}{c} - \log_{10}(n) \right) = r_1 - c \log_{10}(n)
 \end{align}$$
 
-as if \\(r_1\\) is much greater than the other ratings (in which case the naive average calculation method *really* fails), then the second term containing the remaining ratings would be insignificant as it is divided by the much larger \\( \frac{10^{r_1 / c}}{n} \\) term.
+as if \\(r_1\\) is much greater than the other ratings (in which case the naive average calculation method *really* fails), then the second term containing the remaining ratings would be insignificant as it is divided by the much larger \\( \frac{10^{r_1 / c}}{n} \\) term. So under the approximation, \\(A(r_1, r_2, \dots, r_n; c) < r_1 = \max(r_1, r_2, \dots, r_n) \\), and \\( B(r_1, r_2, \dots, r_n) \geq \max(r_1, r_2, \dots, r_n) \\) as well.

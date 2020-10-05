@@ -27,7 +27,7 @@ P(\text{expert beats beginner}) = 0.9999 \\
 r_\mathrm{expert} \approx 2400
 \end{align} $$
 
-Then the expert's Elo rating would be 2400. So far so good. But assume that instead of putting Elo ratings on a log scale, we calculate the chance of the expert beating the beginner as \( \frac{r_\mathrm{expert}}{r_\mathrm{expert} + r_\mathrm{beginner}} \). Then,
+Then the expert's Elo rating would be 2400. So far so good. But assume that instead of putting Elo ratings on a log scale, we calculate the chance of the expert beating the beginner as \\( \frac{r_\mathrm{expert}}{r_\mathrm{expert} + r_\mathrm{beginner}} \\). Then,
 
 
 $$ \begin{align}

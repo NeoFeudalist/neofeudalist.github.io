@@ -81,11 +81,13 @@ We can prove that this is always either an underestimate of or equal to the aver
 
 $$ g\left( \frac{\sum_{i=1}^n r_i}{n} \right) \geq \frac{\sum_{i=1}^n g(r_i)}{n} $$
 
-with equality holding if and only if \\( r_1 = r_2 = \dots = r_n \\). Then per the concavity of the \\( \log_{10} \\) function,
+with equality holding if and only if \\( r_1 = r_2 = \dots = r_n \\). Then per Jensen's inequality and the concavity of the \\( \log_{10} \\) function,
 
 $$ \begin{align}
 A(r_1, r_2, \dots, r_n; c) = c \log_{10}\left(\frac{1}{n} \sum_{i=1}^n 10^{r_i / c} \right) \\
 \geq \frac{c}{n} \sum_{i=1}^n \log_{10}(10^{r_i / c}) = \frac{c}{n} \sum_{i=1}^n r_i / c = \frac{1}{n} \sum_{i=1}^n r_i \\
 = E(r_1, r_2, \dots, r_n)
 \end{align}
+
+Equality holds if and only if \\( r_1 = r_2 = \dots = r_n \\) as required.
 $$

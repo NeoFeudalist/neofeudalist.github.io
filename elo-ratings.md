@@ -50,7 +50,7 @@ $$ P(\text{player A beats player B}) = \frac{s_a}{s_a + s_b} $$
 
 Define \\( f(x, c) = 10^{x/c} \\). \\( r \\) is the rating, and \\( c > 0 \\) is the constant I was mentioning before, usually set to 400. Then, suppose that there are \\( n \\) players with ratings \\( r_1, r_2, \dots, r_n \\). The right way to calculate the average is,
 
-$$ A(r_1, r_2, \dots, r_n; c) = c \log_{10}\left(\frac{1}{n} \sum_{i=1}^n f(r_i) \right) = c \log_{10}\left(\frac{1}{n} \sum_{i=1}^n 10^{r_i / c} \right) $$
+$$ A(r_1, r_2, \dots, r_n; c) = c \log_{10}\left(\frac{1}{n} \sum_{i=1}^n f(r_i, c) \right) = c \log_{10}\left(\frac{1}{n} \sum_{i=1}^n 10^{r_i / c} \right) $$
 
 Expressed in Python:
 
@@ -71,7 +71,7 @@ $$ A(1500, 1500, 1500, 1500, 1500, 1500; c = 400) \approx 1500$$
 
 Define the following function for the naive way of calculating average rating:
 
-$$ E(r_1, r_2, \dots, r_n) = \frac{1}{n} \sum_{i=1}^n f(r_i) $$
+$$ E(r_1, r_2, \dots, r_n) = \frac{1}{n} \sum_{i=1}^n r_i $$
 
 We can prove that this is always either an underestimate of or equal to the average calculated with our method.
 

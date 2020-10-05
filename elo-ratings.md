@@ -75,7 +75,7 @@ $$ E(r_1, r_2, \dots, r_n) = \frac{1}{n} \sum_{i=1}^n f(r_i) $$
 
 We can prove that this is always either an underestimate of or equal to the average calculated with our method.
 
-**Theorem.** Let \\(r_1, r_2, \dots, r_n\\) be an arbirary sequence and \\(c > 0\\). Then, $$ A(r_1, r_2, \dots, r_n; c) \geq E(r_1, r_2, \dots, r_n) $$ with equality holding if and only if \\( r_1 = r_2 = \dots = r_n \\).
+**Theorem.** Let \\(r_1, r_2, \dots, r_n\\) be an arbirary sequence and \\(c > 0\\). Then, \\( A(r_1, r_2, \dots, r_n; c) \geq E(r_1, r_2, \dots, r_n) \\) with equality holding if and only if \\( r_1 = r_2 = \dots = r_n \\).
 
 **Proof.** Jensen's inequality states that for any concave function \\( g(x) \\) and a list of real numbers \\( r_1, r_2, \dots, r_n \\),
 

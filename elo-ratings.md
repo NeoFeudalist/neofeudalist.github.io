@@ -75,7 +75,7 @@ $$ E(r_1, r_2, \dots, r_n) = \frac{1}{n} \sum_{i=1}^n r_i $$
 
 We can prove that this is always either an underestimate of or equal to the average calculated with our method.
 
-**Theorem.** Let \\(r_1, r_2, \dots, r_n\\) be an arbitrary sequence and \\(c > 0\\). Then, \\( A(r_1, r_2, \dots, r_n; c) \geq E(r_1, r_2, \dots, r_n) \\) with equality holding if and only if \\( r_1 = r_2 = \dots = r_n \\).
+**Theorem 1.** Let \\(c > 0\\). Then, \\( A(r_1, r_2, \dots, r_n; c) \geq E(r_1, r_2, \dots, r_n) \\) with equality holding if and only if \\( r_1 = r_2 = \dots = r_n \\).
 
 **Proof.** Jensen's inequality states that for any concave function \\( g(x) \\) and a list of real numbers \\( r_1, r_2, \dots, r_n \\),
 
@@ -92,6 +92,12 @@ A(r_1, r_2, \dots, r_n; c) = c \log_{10}\left(\frac{1}{n} \sum_{i=1}^n 10^{r_i /
 Equality holds if and only if \\( r_1 = r_2 = \dots = r_n \\) as required. $$\tag*{$\blacksquare$}$$
 
 ## A simple approximation
-But what if logarithms and math jazz make your head turn? Is there a simpler way to calculate average Elo ratings without having to pull out that TI-84 that's been rotting in your attic since high school?
+But what if logarithms and math jazz make your head turn? Is there a simpler way to calculate average Elo ratings without having to pull out that TI-84 that's been rotting in your attic since high school? One way is to first calculate the average ( \\( E(r_1, r_2, \dots, r_n) \\) ), take the highest rating in the list, and then average your calculated average with the highest rating. That is, 
 
+$$ B(r_1, r_2, \dots, r_n) = \frac{E(r_1, r_2, \dots, r_n) + \max(r_1, r_2, \dots, r_n)}{2} $$
 
+Since the maximum value is always greater than or equal to the average, it follows that \\( B(r_1, r_2, \dots, r_n) \geq E(r_1, r_2, \dots, r_n) \\) with equality holding if and only if all ratings are equal, exactly the same case where equality holds for the inequality \\( A(r_1, r_2, \dots, r_n; c) \geq E(r_1, r_2, \dots, r_n) \\). Essentially, \\( B(r_1, r_2, \dots, r_n) \\) is a correction for the underestimate of \\(E\\). But how close is it to \\(B(r_1, r_2, \dots, r_n; c)\\)?
+
+**Theorem 2.** Let \\(c > 0\\). Then \\( A(r_1, r_2, \dots, r_n; c) \geq B(r_1, r_2, \dots, r_n) \\) with equality holding if and only if \\( r_1 = r_2 = \dots = r_n \\).
+
+**Proof.** 

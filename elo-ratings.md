@@ -105,6 +105,7 @@ Without loss of generality, let \\( \max(r_1, r_2, \dots, r_n) = r_1 \\) - ratin
 $$ \log_{10}(x + \delta) \approx \log_{10}(x) + \frac{\delta}{x \ln(10)} $$
 
 Then,
+
 $$
 \begin{align}
 A(r_1, r_2, \dots, r_n; c) = c \log_{10}\left(\frac{1}{n} \sum_{i=1}^n 10^{r_i / c} \right) \\

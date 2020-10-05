@@ -23,7 +23,7 @@ Note that 400 is a constant which might vary depending on how the system is setu
 $$ \begin{align}
 r_\mathrm{beginner} = 800 \\
 P(\text{expert beats beginner}) = 0.9999 \\
-\Rightarrow 0.9999 = \frac{1}{1 + 10^{(500 - r_\mathrm{expert})/400}} \\
+\Rightarrow 0.9999 = \frac{1}{1 + 10^{(800 - r_\mathrm{expert})/400}} \\
 r_\mathrm{expert} \approx 2400
 \end{align} $$
 

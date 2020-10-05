@@ -98,7 +98,7 @@ But what if logarithms and math jazz make your head turn? Is there a simpler way
 
 $$ B(r_1, r_2, \dots, r_n) = \frac{E(r_1, r_2, \dots, r_n) + \max(r_1, r_2, \dots, r_n)}{2} $$
 
-Since the maximum value is always greater than or equal to the average, it follows that \\( B(r_1, r_2, \dots, r_n) \geq E(r_1, r_2, \dots, r_n) \\) with equality holding if and only if all ratings are equal, exactly the same case where equality holds for the inequality \\( A(r_1, r_2, \dots, r_n; c) \geq E(r_1, r_2, \dots, r_n) \\). Essentially, \\( B(r_1, r_2, \dots, r_n) \\) is a correction for the underestimate of \\(E\\). Another way to justify the approximation is to consider the form of \\ (A(r_1, r_2, \dots, r_n; c) \\):
+Since the maximum value is always greater than or equal to the average, it follows that \\( B(r_1, r_2, \dots, r_n) \geq E(r_1, r_2, \dots, r_n) \\) with equality holding if and only if all ratings are equal, exactly the same case where equality holds for the inequality \\( A(r_1, r_2, \dots, r_n; c) \geq E(r_1, r_2, \dots, r_n) \\). Essentially, \\( B(r_1, r_2, \dots, r_n) \\) is a correction for the underestimate of \\(E\\). Another way to justify the approximation is to consider the form of \\(A(r_1, r_2, \dots, r_n; c) \\):
 
 $$A(r_1, r_2, \dots, r_n; c) = c \log_{10}\left(\frac{1}{n} \sum_{i=1}^n 10^{r_i / c} \right)$$
 

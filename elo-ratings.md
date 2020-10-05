@@ -44,10 +44,50 @@ You have to compensate for the fact that Elo ratings are on a log scale, which m
 
 $$ P(\text{player A beats player B}) = \frac{1}{1 + 10^{(r_b - r_a)/400}} $$
 
-If we let \\( s_a = 10^(r_a / 400) \\) and \\( s_b = 10^(s_b / 400) \\) (for players A and B respectively), then some calculation results in the following equivalent formula,
+If we let \\( s_a = 10^{r_a / 400} \\) and \\( s_b = 10^{s_b / 400} \\) (for players A and B respectively), then some calculation results in the following equivalent formula,
 
 $$ P(\text{player A beats player B}) = \frac{s_a}{s_a + s_b} $$
 
 Define \\( f(x, c) = 10^{x/c} \\). \\( r \\) is the rating, and \\( c > 0 \\) is the constant I was mentioning before, usually set to 400. Then, suppose that there are \\( n \\) players with ratings \\( r_1, r_2, \dots, r_n \\). The right way to calculate the average is,
 
-$$ A(r_1, r_2, \dots, r_n; c) = c \log_{10}\left(\frac{1}{n} \sum_{i=1}^n r_i \right) $$
+$$ A(r_1, r_2, \dots, r_n; c) = c \log_{10}\left(\frac{1}{n} \sum_{i=1}^n f(r_i) \right) = c \log_{10}\left(\frac{1}{n} \sum_{i=1}^n 10^{r_i / c} \right) $$
+
+Expressed in Python:
+
+```python
+from math import log10
+def average_rating(ratings, c):
+  linscale_ratings = [10 ** (rating / c) for rating in ratings]
+  return c * log10(sum(linscale_ratings) / len(ratings))
+```
+
+Let's go back to our example. Our team with five noobs and one superstar now has an average rating of
+
+$$ A(2500, 1200, 1200, 1200, 1200, 1200; c = 400) \approx 2189$$
+
+which more accurately reflects the team's actual average rating. Meanwhile the team full of 1500 rated players would still have an average of
+
+$$ A(1500, 1500, 1500, 1500, 1500, 1500; c = 400) \approx 1500$$
+
+Define the following function for the naive way of calculating average rating:
+
+$$ E(r_1, r_2, \dots, r_n) = \frac{1}{n} \sum_{i=1}^n f(r_i) $$
+
+We can prove that this is always either an underestimate of or equal to the average calculated with our method. Specifically, for all choices of \\( c > 0 \\),
+
+**Theorem.** $$ A(r_1, r_2, \dots, r_n; c) \geq E(r_1, r_2, \dots, r_n) $$ with equality holding if and only if \\( r_1 = r_2 = \dots = r_n \\).
+
+**Proof.** Jensen's inequality states that for any concave function \\( g(x) \\) and a list of numbers \\( r_1, r_2, \dots, r_n \\),
+
+$$ g\left( \frac{\sum_{i=1}^n r_i}{n} \right) \geq \frac{\sum_{i=1}^n g(r_i)}{n} $$
+
+with equality holding if and only if \\( r_1 = r_2 = \dots = r_n \\). Then per the concavity of the \\( \log_{10} \\) function,
+
+$$ \begin{align}
+A(r_1, r_2, \dots, r_n; c) = c \log_{10}\left(\frac{1}{n} \sum_{i=1}^n 10^{r_i / c} \right) \\
+\geq \frac{c}{n} \sum_{i=1}^n \log_{10}(10^{r_i / c}) \\
+= \frac{c}{n} \sum_{i=1}^n r_i / c \\
+= \frac{1}{n} \sum_{i=1}^n r_i \\
+= E(r_1, r_2, \dots, r_n)
+\end{align}
+$$

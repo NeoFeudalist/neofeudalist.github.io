@@ -5,7 +5,9 @@
 # How Not To Calculate Average Elo Rating
 
 ## TL;DR (for the math-phobic)
-If you are in charge of a team in some team game where each of your players have Elo ratings, please don't calculate your team's average rating the usual way: don't just sum their ratings and divide by the number of players. To get a more accurate rating, take the average you would usually get, add the rating of the team member with the highest rating, and divide by 2!
+If you are in charge of a team in some team game where each of your players have Elo ratings, please don't calculate your team's average rating the usual way: don't just sum their ratings and divide by the number of players. To get a more accurate rating, take the average you would usually get, add the rating of the team member with the highest rating, and divide by 2! 
+
+For example, let's say your team has three players with ratings: 1600, 1500, and 2300. The average would be 1800 (1600 + 1500 + 2300 = 5400, divide by 3). Then average it with the highest rating of 2300, resulting in a final rating of 2050. This is a way fairer way of calculating average Elo ratings.
 
 ## Elo ratings are on a log scale
 Elo ratings can be misleading because they are on a log scale, which basically means that you cannot determine the chance of player A winning over player B by just dividing player A's rating by the sum of both player A and B's ratings. For example, a player with an Elo rating of 3000 would win against a player with an Elo rating of 1500 not two-thirds of the time, as

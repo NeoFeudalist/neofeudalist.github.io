@@ -108,7 +108,7 @@ Then,
 $$
 \begin{align}
 A(r_1, r_2, \dots, r_n; c) = c \log_{10}\left(\frac{1}{n} \sum_{i=1}^n 10^{r_i / c} \right) \\
-\approx c \left(\log_{10}\left( \frac{10^{r_1 / c}}{n} \right) + \frac{\log_{10}\left(\frac{1}{n} \sum_{i=2}^n 10^{r_i / c} \right)}{\frac{10^{r_1 / c}}{n}} \right) \right) \\
+\approx c \left(\log_{10}\left(\frac{10^{r_1 / c}}{n} \right) + \frac{\log_{10}\left(\frac{1}{n} \sum_{i=2}^n 10^{r_i / c} \right)}{\frac{10^{r_1 / c}}{n}} \right) \\
 \approx c \left(\log_{10}\left( \frac{10^{r_1 / c}}{n} \right) \right) = c \left( \frac{r_1}{c} - \log_{10}(n) \right) = r_1 - c \log_{10}(n)
 \end{align}$$
 

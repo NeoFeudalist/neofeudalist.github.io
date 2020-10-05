@@ -50,4 +50,4 @@ $$ P(\text{player A beats player B}) = \frac{s_a}{s_a + s_b} $$
 
 Define \\( f(x, c) = 10^{x/c} \\). \\( r \\) is the rating, and \\( c > 0 \\) is the constant I was mentioning before, usually set to 400. Then, suppose that there are \\( n \\) players with ratings \\( r_1, r_2, \dots, r_n \\). The right way to calculate the average is,
 
-$$ A(r_1, r_2, \dots, r_n; c) = c \log_10\left(\frac{1}{n} \sum_{i=1}^n r_i \right) $$
+$$ A(r_1, r_2, \dots, r_n; c) = c \log_{10}\left(\frac{1}{n} \sum_{i=1}^n r_i \right) $$

@@ -128,7 +128,7 @@ A(\mathbf{r}; c) = c \log_{10}\left(\frac{1}{n} \sum_{i=1}^n 10^{r_i / c} \right
 as if $r_1$ is much greater than the other ratings (in which case the naive average calculation method *really* fails), then the second term containing the remaining ratings would be insignificant as it is divided by the much larger $ \frac{10^{r_1 / c}}{n} $ term. So under the approximation, $A(\mathbf{r}; c) < r_1 = \max(\mathbf{r}) $, and $ B(\mathbf{r}) \leq \max(\mathbf{r}) $ as well.
 
 ## Properties of $ B(\mathbf{r}) $
-**Theorem 2.** $B(\mathbf{r})$ \geq $E(\mathbf{r})$ with equality if and only if $r_1 = r_2 = \dots = r_n$.
+**Theorem 2.** $B(\mathbf{r}) \geq E(\mathbf{r})$ with equality if and only if $r_1 = r_2 = \dots = r_n$.
 *Proof.* Since for all $i$, $\max(\mathbf{r}) \geq r_i$, it follows that $ n \max(\mathbf{r}) \geq \sum_{i=1}^n r_i $ and $\max(\mathbf{r}) \geq \frac{1}{n} \sum_{i=1}^n r_i = E(\mathbf{r})$. Obviously equality holds if and only if $\max(\mathbf{r}) = r_i$ for all $i$, or in other words $r_1 = r_2 = \dots = r_n$. Then,
 
 $$ \begin{align}

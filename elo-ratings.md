@@ -60,9 +60,9 @@ If we let $ s_a = 10^{r_a / 400} $ and $ s_b = 10^{s_b / 400} $ (for players A a
 
 $$ P(\text{player A beats player B}) = \frac{s_a}{s_a + s_b} $$
 
-Define $ f(x, c) = 10^{x/c} $. $ r $ is the rating, and $ c > 0 $ is the constant I was mentioning before, usually set to 400. Then, suppose that there are $ n $ players with ratings $ r_1, r_2, \dots, r_n $. The right way to calculate the average is,
+Define $ f(x, c) = 10^{x/c} $. $ r $ is the rating, and $ c > 0 $ is the constant I was mentioning before, usually set to 400. Then, suppose that there are $ n $ players with ratings $ \mathbf{r} = r_1, r_2, \dots, r_n $. The right way to calculate the average is,
 
-$$ A(r_1, r_2, \dots, r_n; c) = c \log_{10}\left(\frac{1}{n} \sum_{i=1}^n f(r_i, c) \right) = c \log_{10}\left(\frac{1}{n} \sum_{i=1}^n 10^{r_i / c} \right) $$
+$$ A(\mathbf{r}; c) = c \log_{10}\left(\frac{1}{n} \sum_{i=1}^n f(r_i, c) \right) = c \log_{10}\left(\frac{1}{n} \sum_{i=1}^n 10^{r_i / c} \right) $$
 
 Expressed in Python:
 
@@ -83,36 +83,36 @@ $$ A(1500, 1500, 1500, 1500, 1500, 1500; c = 400) \approx 1500$$
 
 Define the following function for the naive way of calculating average rating:
 
-$$ E(r_1, r_2, \dots, r_n) = \frac{1}{n} \sum_{i=1}^n r_i $$
+$$ E(\mathbf{r}) = \frac{1}{n} \sum_{i=1}^n r_i $$
 
 We can prove that this is always either an underestimate of or equal to the average calculated with our method.
 
-**Theorem.** Let $c > 0$. Then, $ A(r_1, r_2, \dots, r_n; c) \geq E(r_1, r_2, \dots, r_n) $ with equality holding if and only if $ r_1 = r_2 = \dots = r_n $.
+**Theorem.** Let $c > 0$. Then, $ A(\mathbf{r}; c) \geq E(\mathbf{r}) $ with equality holding if and only if $ r_1 = r_2 = \dots = r_n $.
 
-**Proof.** Jensen's inequality states that for any concave function $ g(x) $ and a list of real numbers $ r_1, r_2, \dots, r_n $,
+**Proof.** Jensen's inequality states that for any concave function $ g(x) $ and a list of real numbers $ \mathbf{r} $,
 
 $$ g\left( \frac{\sum_{i=1}^n r_i}{n} \right) \geq \frac{\sum_{i=1}^n g(r_i)}{n} $$
 
 with equality holding if and only if $ r_1 = r_2 = \dots = r_n $. Then per Jensen's inequality and the concavity of the $ \log_{10} $ function,
 
 $$ \begin{align}
-A(r_1, r_2, \dots, r_n; c) = c \log_{10}\left(\frac{1}{n} \sum_{i=1}^n 10^{r_i / c} \right) \\
+A(\mathbf{r}; c) = c \log_{10}\left(\frac{1}{n} \sum_{i=1}^n 10^{r_i / c} \right) \\
 \geq \frac{c}{n} \sum_{i=1}^n \log_{10}(10^{r_i / c}) = \frac{c}{n} \sum_{i=1}^n r_i / c = \frac{1}{n} \sum_{i=1}^n r_i \\
-= E(r_1, r_2, \dots, r_n)
+= E(\mathbf{r})
 \end{align} $$
 
 Equality holds if and only if $ r_1 = r_2 = \dots = r_n $ as required. $\blacksquare$
 
 ## A simple approximation
-But what if logarithms and math jazz make your head turn? Is there a simpler way to calculate average Elo ratings without having to pull out that TI-84 that's been rotting in your attic since high school? One way is to first calculate the average ( $ E(r_1, r_2, \dots, r_n) $ ), take the highest rating in the list, and then average your calculated average with the highest rating. That is, 
+But what if logarithms and math jazz make your head turn? Is there a simpler way to calculate average Elo ratings without having to pull out that TI-84 that's been rotting in your attic since high school? One way is to first calculate the average ( $ E(\mathbf{r}) $ ), take the highest rating in the list, and then average your calculated average with the highest rating. That is, 
 
-$$ B(r_1, r_2, \dots, r_n) = \frac{E(r_1, r_2, \dots, r_n) + \max(r_1, r_2, \dots, r_n)}{2} $$
+$$ B(\mathbf{r}) = \frac{E(\mathbf{r}) + \max(\mathbf{r})}{2} $$
 
-Since the maximum value is always greater than or equal to the average, it follows that $ B(r_1, r_2, \dots, r_n) \geq E(r_1, r_2, \dots, r_n) $ with equality holding if and only if all ratings are equal, exactly the same case where equality holds for the inequality $ A(r_1, r_2, \dots, r_n; c) \geq E(r_1, r_2, \dots, r_n) $. Essentially, $ B(r_1, r_2, \dots, r_n) $ is a correction for the underestimate of $E$. Another way to justify the approximation is to consider the form of $A(r_1, r_2, \dots, r_n; c) $:
+Since the maximum value is always greater than or equal to the average, it follows that $ B(\mathbf{r}) \geq E(\mathbf{r}) $ with equality holding if and only if all ratings are equal, exactly the same case where equality holds for the inequality $ A(\mathbf{r}; c) \geq E(\mathbf{r}) $. Essentially, $ B(\mathbf{r}) $ is a correction for the underestimate of $E$. Another way to justify the approximation is to consider the form of $A(\mathbf{r}; c) $:
 
-$$A(r_1, r_2, \dots, r_n; c) = c \log_{10}\left(\frac{1}{n} \sum_{i=1}^n 10^{r_i / c} \right)$$
+$$A(\mathbf{r}; c) = c \log_{10}\left(\frac{1}{n} \sum_{i=1}^n 10^{r_i / c} \right)$$
 
-Without loss of generality, let $ \max(r_1, r_2, \dots, r_n) = r_1 $ - rating lists can be considered as equivalence classes where two lists of ratings are equal if and only if they are permutations of each other. Take the derivative $ \frac{d}{dx} \log_{10}{x} = \frac{1}{x \ln(10)} $. Taking its first order Taylor series expansion around an arbitrary value of $ x $,
+Without loss of generality, let $ \max(\mathbf{r}) = r_1 $ - rating lists can be considered as equivalence classes where two lists of ratings are equal if and only if they are permutations of each other. Take the derivative $ \frac{d}{dx} \log_{10}{x} = \frac{1}{x \ln(10)} $. Taking its first order Taylor series expansion around an arbitrary value of $ x $,
 
 $$ \log_{10}(x + \delta) \approx \log_{10}(x) + \frac{\delta}{x \ln(10)} $$
 
@@ -120,11 +120,11 @@ Then,
 
 $$
 \begin{align}
-A(r_1, r_2, \dots, r_n; c) = c \log_{10}\left(\frac{1}{n} \sum_{i=1}^n 10^{r_i / c} \right) \\
+A(\mathbf{r}; c) = c \log_{10}\left(\frac{1}{n} \sum_{i=1}^n 10^{r_i / c} \right) \\
 \approx c \left(\log_{10}\left(\frac{10^{r_1 / c}}{n} \right) + \frac{\log_{10}\left(\frac{1}{n} \sum_{i=2}^n 10^{r_i / c} \right)}{\frac{10^{r_1 / c}}{n} \ln(10)} \right) \\
 \approx c \left(\log_{10}\left( \frac{10^{r_1 / c}}{n} \right) \right) = c \left( \frac{r_1}{c} - \log_{10}(n) \right) = r_1 - c \log_{10}(n)
 \end{align}$$
 
-as if $r_1$ is much greater than the other ratings (in which case the naive average calculation method *really* fails), then the second term containing the remaining ratings would be insignificant as it is divided by the much larger $ \frac{10^{r_1 / c}}{n} $ term. So under the approximation, $A(r_1, r_2, \dots, r_n; c) < r_1 = \max(r_1, r_2, \dots, r_n) $, and $ B(r_1, r_2, \dots, r_n) \leq \max(r_1, r_2, \dots, r_n) $ as well.
+as if $r_1$ is much greater than the other ratings (in which case the naive average calculation method *really* fails), then the second term containing the remaining ratings would be insignificant as it is divided by the much larger $ \frac{10^{r_1 / c}}{n} $ term. So under the approximation, $A(\mathbf{r}; c) < r_1 = \max(\mathbf{r}) $, and $ B(\mathbf{r}) \leq \max(\mathbf{r}) $ as well.
 
-## Properties of $ B(n) $
+## Properties of $ B(\mathbf{r}) $

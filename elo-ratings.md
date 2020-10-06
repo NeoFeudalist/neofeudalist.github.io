@@ -150,7 +150,7 @@ $$
 $$
 
 ## Properties of $ B(\mathbf{r}) $
-**Theorem 3.** $B(\mathbf{r}) \geq E(\mathbf{r})$ with equality if and only if $r_1 = r_2 = \dots = r_n$.
+**Theorem 3.** $E(\mathbf{r}) \leq B(\mathbf{r}) \leq \max(B(\mathbf{r}))$ with equality if and only if $r_1 = r_2 = \dots = r_n$.
 
 *Proof.* Since for all $i$, $\max(\mathbf{r}) \geq r_i$, it follows that $ n \max(\mathbf{r}) \geq \sum_{i=1}^n r_i $ and $\max(\mathbf{r}) \geq \frac{1}{n} \sum_{i=1}^n r_i = E(\mathbf{r})$. Obviously equality holds if and only if $\max(\mathbf{r}) = r_i$ for all $i$, or in other words $r_1 = r_2 = \dots = r_n$. Then,
 
@@ -159,6 +159,12 @@ B(\mathbf{r}) = \frac{E(\mathbf{r}) + \max(\mathbf{r})}{2} \\
 = \frac{E(\mathbf{r}) + E(\mathbf{r}) + \max(\mathbf{r}) - E(\mathbf{r})}{2} \\
 = E(\mathbf{r}) + \frac{\max(\mathbf{r}) - E(\mathbf{r})}{2} \geq E(\mathbf{r})
 \end{align} $$
+
+Furthermore,
+
+$$
+B(\mathbf{r}) = E(\mathbf{r}) + \frac{\max(\mathbf{r}) - E(\mathbf{r})}{2} \leq \max(\mathbf{r})
+$$
 
 Equality follows in the same conditions as mentioned. $\blacksquare$
 

@@ -100,7 +100,7 @@ A(r_1, r_2, \dots, r_n; c) = c \log_{10}\left(\frac{1}{n} \sum_{i=1}^n 10^{r_i /
 = E(r_1, r_2, \dots, r_n)
 \end{align} $$
 
-Equality holds if and only if $ r_1 = r_2 = \dots = r_n $ as required. $$ \tag*{$\blacksquare$} $$
+Equality holds if and only if $ r_1 = r_2 = \dots = r_n $ as required. $$ \tag*{\blacksquare} $$
 
 ## A simple approximation
 But what if logarithms and math jazz make your head turn? Is there a simpler way to calculate average Elo ratings without having to pull out that TI-84 that's been rotting in your attic since high school? One way is to first calculate the average ( $ E(r_1, r_2, \dots, r_n) $ ), take the highest rating in the list, and then average your calculated average with the highest rating. That is, 

@@ -87,9 +87,9 @@ $$ E(\mathbf{r}) = \frac{1}{n} \sum_{i=1}^n r_i $$
 
 We can prove that this is always either an underestimate of or equal to the average calculated with our method.
 
-**Theorem.** Let $c > 0$. Then, $ A(\mathbf{r}; c) \geq E(\mathbf{r}) $ with equality holding if and only if $ r_1 = r_2 = \dots = r_n $.
+**Theorem 1.** Let $c > 0$. Then, $ A(\mathbf{r}; c) \geq E(\mathbf{r}) $ with equality holding if and only if $ r_1 = r_2 = \dots = r_n $.
 
-**Proof.** Jensen's inequality states that for any concave function $ g(x) $ and a list of real numbers $ \mathbf{r} $,
+*Proof.* Jensen's inequality states that for any concave function $ g(x) $ and a list of real numbers $ \mathbf{r} $,
 
 $$ g\left( \frac{\sum_{i=1}^n r_i}{n} \right) \geq \frac{\sum_{i=1}^n g(r_i)}{n} $$
 
@@ -128,3 +128,12 @@ A(\mathbf{r}; c) = c \log_{10}\left(\frac{1}{n} \sum_{i=1}^n 10^{r_i / c} \right
 as if $r_1$ is much greater than the other ratings (in which case the naive average calculation method *really* fails), then the second term containing the remaining ratings would be insignificant as it is divided by the much larger $ \frac{10^{r_1 / c}}{n} $ term. So under the approximation, $A(\mathbf{r}; c) < r_1 = \max(\mathbf{r}) $, and $ B(\mathbf{r}) \leq \max(\mathbf{r}) $ as well.
 
 ## Properties of $ B(\mathbf{r}) $
+**Theorem 2.** $B(\mathbf{r})$ \geq $E(\mathbf{r})$ with equality if and only if $r_1 = r_2 = \dots = r_n$.
+*Proof.* Since for all $i$, $\max(\mathbf{r}) \geq r_i$, it follows that $ n \max(\mathbf{r}) \geq \sum_{i=1}^n r_i $ and $\max(\mathbf{r}) \geq \sum_{i=1}^n r_i = E(\mathbf{r})$. Obviously equality holds if and only if $\max(\mathbf{r}) = r_i$ for all $i$, or in other words $r_1 = r_2 = \dots = r_n$. Then,
+
+$$ \begin{align}
+B(\mathbf{r}) = \frac{E(\mathbf{r}) + \max(\mathbf{r})}{2} \\
+= \frac{E(\mathbf{r}) + E(\mathbf{r}) + (\max(\mathbf{r}) - E(\mathbf{r})}{2} 
+= E(\mathbf{r}) + \frac{\max(\mathbf{r}) - E(\mathbf{r})}{2} \geq E(\mathbf{r})
+\end{align} $$
+

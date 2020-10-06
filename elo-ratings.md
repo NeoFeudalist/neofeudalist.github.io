@@ -133,7 +133,7 @@ as if $r_1$ is much greater than the other ratings (in which case the naive aver
 
 $$ \begin{align}
 B(\mathbf{r}) = \frac{E(\mathbf{r}) + \max(\mathbf{r})}{2} \\
-= \frac{E(\mathbf{r}) + E(\mathbf{r}) + (\max(\mathbf{r}) - E(\mathbf{r})}{2} 
+= \frac{E(\mathbf{r}) + E(\mathbf{r}) + \max(\mathbf{r}) - E(\mathbf{r})}{2} \\
 = E(\mathbf{r}) + \frac{\max(\mathbf{r}) - E(\mathbf{r})}{2} \geq E(\mathbf{r})
 \end{align} $$
 

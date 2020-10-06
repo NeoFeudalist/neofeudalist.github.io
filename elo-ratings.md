@@ -87,7 +87,7 @@ $$ E(\mathbf{r}) = \frac{1}{n} \sum_{i=1}^n r_i $$
 
 We can prove that this is always either an underestimate of or equal to the average calculated with our method.
 
-**Theorem 1.** Let $c > 0$. Then, $ A(\mathbf{r}; c) \geq E(\mathbf{r}) $ with equality holding if and only if $ r_1 = r_2 = \dots = r_n $.
+**Theorem 1.** $ A(\mathbf{r}; c) \geq E(\mathbf{r}) $ with equality holding if and only if $ r_1 = r_2 = \dots = r_n $.
 
 *Proof.* Jensen's inequality states that for any concave function $ g(x) $ and a list of real numbers $ \mathbf{r} $,
 
@@ -102,6 +102,18 @@ A(\mathbf{r}; c) = c \log_{10}\left(\frac{1}{n} \sum_{i=1}^n 10^{r_i / c} \right
 \end{align} $$
 
 Equality holds if and only if $ r_1 = r_2 = \dots = r_n $ as required. $\blacksquare$
+
+**Theorem 2.** $ A(\mathbf{r}; c) \leq \max(\mathbf{r}) $, with equality holding if and only if $ r_1 = r_2 = \dots = r_n $
+
+*Proof.* Without loss of generality, let $ \max(\mathbf{r}) = r_1 $. Then for all $i$, $r_i \geq r_1$. Then, noting that $10^{r_i / c}$ is a strictly increasing function of $r_i$,
+
+$$ \begin{align}
+r_1 = c \log_{10}\left( 10^{r_1 / c} \right) \\
+\geq c \log_{10}\left( \frac{1}{n} \sum_{i=1}^n 10^{r_i / c} \right) = A(\mathbf{r}; c)
+\end{align}
+$$
+
+Equality holds if and only if every rating is equal to the maximum, that is, $ r_1 = r_2 = \dots = r_n $. $\blacksquare$
 
 ## A simple approximation
 But what if logarithms and math jazz make your head turn? Is there a simpler way to calculate average Elo ratings without having to pull out that TI-84 that's been rotting in your attic since high school? One way is to first calculate the average ( $ E(\mathbf{r}) $ ), take the highest rating in the list, and then average your calculated average with the highest rating. That is, 
@@ -125,10 +137,20 @@ A(\mathbf{r}; c) = c \log_{10}\left(\frac{1}{n} \sum_{i=1}^n 10^{r_i / c} \right
 \approx c \left(\log_{10}\left( \frac{10^{r_1 / c}}{n} \right) \right) = c \left( \frac{r_1}{c} - \log_{10}(n) \right) = r_1 - c \log_{10}(n)
 \end{align}$$
 
-as if $r_1$ is much greater than the other ratings (in which case the naive average calculation method *really* fails), then the second term containing the remaining ratings would be insignificant as it is divided by the much larger $ \frac{10^{r_1 / c}}{n} $ term. So under the approximation, $A(\mathbf{r}; c) < r_1 = \max(\mathbf{r}) $, and $ B(\mathbf{r}) \leq \max(\mathbf{r}) $ as well.
+as if $r_1$ is much greater than the other ratings (in which case the naive average calculation method *really* fails), then the second term containing the remaining ratings would be insignificant as it is divided by the much larger $ \frac{10^{r_1 / c}}{n} $ term. So under the approximation, $A(\mathbf{r}; c) < r_1 = \max(\mathbf{r}) $, and $ B(\mathbf{r}) \leq \max(\mathbf{r}) $ as well. Another way to justify the approximation is to view it as the average of the bounds
+
+$$
+E(\mathbf{r}) \leq A(\mathbf{r}; c) \leq \max(\mathbf{r})
+$$
+
+We can see that the maximum error of the approximation is
+
+$$
+|B(\mathbf{r}) - A(\mathbf{r}; c)| \leq \frac{\max(\mathbf{r}) - E(\mathbf{r})}{2}
+$$
 
 ## Properties of $ B(\mathbf{r}) $
-**Theorem 2.** $B(\mathbf{r}) \geq E(\mathbf{r})$ with equality if and only if $r_1 = r_2 = \dots = r_n$.
+**Theorem 3.** $B(\mathbf{r}) \geq E(\mathbf{r})$ with equality if and only if $r_1 = r_2 = \dots = r_n$.
 
 *Proof.* Since for all $i$, $\max(\mathbf{r}) \geq r_i$, it follows that $ n \max(\mathbf{r}) \geq \sum_{i=1}^n r_i $ and $\max(\mathbf{r}) \geq \frac{1}{n} \sum_{i=1}^n r_i = E(\mathbf{r})$. Obviously equality holds if and only if $\max(\mathbf{r}) = r_i$ for all $i$, or in other words $r_1 = r_2 = \dots = r_n$. Then,
 
@@ -139,4 +161,5 @@ B(\mathbf{r}) = \frac{E(\mathbf{r}) + \max(\mathbf{r})}{2} \\
 \end{align} $$
 
 Equality follows in the same conditions as mentioned. $\blacksquare$
+
 

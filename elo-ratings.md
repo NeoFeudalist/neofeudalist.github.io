@@ -137,3 +137,7 @@ B(\mathbf{r}) = \frac{E(\mathbf{r}) + \max(\mathbf{r})}{2} \\
 = E(\mathbf{r}) + \frac{\max(\mathbf{r}) - E(\mathbf{r})}{2} \geq E(\mathbf{r})
 \end{align} $$
 
+Equality follows in the same conditions as mentioned. $\blacksquare$
+
+
+
